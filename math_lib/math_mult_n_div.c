@@ -26,9 +26,17 @@ t_cpx	ft_div_cpx(t_cpx a, t_cpx b)
 	float	const_div;
 	t_cpx	to_div;
 
-	const_div = 1 / ((b.x * b.x) + (b.y * b.y));
+	const_div = 1 / (pow(b.x, 2) + pow(b.y, 2));
 	to_div.x = (a.x * b.x) + (a.y * b.y);
 	to_div.y = (a.y * b.x) - (a.x * b.y);
 	ft_real_const_cpx(&to_div, const_div);
 	return (to_div);
+}
+
+void	ft_sqr_cpx(t_cpx *a)
+{
+	t_cpx	tmp;
+
+	tmp = ft_create_cpx(pow((*a).x, 2), pow((*a).y, 2));
+	*a = tmp;
 }
