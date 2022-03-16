@@ -6,19 +6,22 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 11:27:28 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/15 21:17:44 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/16 15:57:16 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-typedef struct	s_data {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_data;
+unsigned int	ft_colour(t_pxl x)
+{
+	unsigned int	colour;
+
+	colour = 0;
+	colour |= (unsigned int)(x.b);
+	colour |= (unsigned int)(x.g) * (unsigned int)pow(16, 2);
+	colour |= (unsigned int)(x.r) * (unsigned int)pow(16, 4);
+	return (colour);
+}
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
@@ -33,28 +36,37 @@ int	main(void)
 	void	*mlx;
 	void	*mlx_win;
 	t_data	img;
+	t_pxl	x;
 
+	x.r = 0;
+	x.g = 0;
+	x.b = 0;
 	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-	img.img = mlx_new_image(mlx, 1920, 1080);
+	mlx_win = mlx_new_window(mlx, WIDTH, HEIGHT, "Hello world!");
+	img.img = mlx_new_image(mlx, WIDTH, HEIGHT);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-								&img.endian);
-	int i = 100; int j = 0;
-	i = 0; int x = 0; int y = 0;
-	while(i++ < 2000)
+			&img.endian);
+	int i = 0;
+	int j = 0;
+	while (i++ < WIDTH - 1)
 	{
-		while (j++ < 2000)
-		{	while (x++ < 16)
-			{	while (y++ < 16)
-
-					my_mlx_pixel_put(&img, i, j, 0xaabbccdd);
-				y = 0;
+		while (j++ < HEIGHT - 1)
+		{
+			if (i % 100 == 0)
+				x.r++;
+			if (j % 105 == 0)
+				x.g++;
+			x.b++;
+			if (x.r == 255)
+			{
+				x.r = 1;
+				x.g = 1;
+				x.b = 1;
 			}
-			x = 0;
+			my_mlx_pixel_put(&img, i, j, ft_colour(x));
 		}
 		j = 0;
 	}
-
 	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 	mlx_loop(mlx);
 }
