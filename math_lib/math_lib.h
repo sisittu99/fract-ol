@@ -29,6 +29,6 @@ void	ft_real_const_cpx(t_cpx *a, float c);
 //math_mult_n_div.c
 t_cpx	ft_mult_cpx(t_cpx a, t_cpx b);
 t_cpx	ft_div_cpx(t_cpx a, t_cpx b);
-void	ft_sqr_cpx(t_cpx *a);
+void	ft_sqr_cpx(t_cpx *a, int real_c, int img_c);
 
 #endif

@@ -33,10 +33,11 @@ t_cpx	ft_div_cpx(t_cpx a, t_cpx b)
 	return (to_div);
 }
 
-void	ft_sqr_cpx(t_cpx *a)
+void	ft_sqr_cpx(t_cpx *a, int real_c, int img_c)
 {
 	t_cpx	tmp;
 
-	tmp = ft_create_cpx(pow((*a).x, 2), pow((*a).y, 2));
-	*a = tmp;
+	tmp = *a;
+	a->x = pow(tmp.x, 2) - pow(tmp.y, 2) + real_c;
+	a->y = 2 * tmp.x * tmp.y + img_c;
 }

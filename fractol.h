@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 15:37:38 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/16 15:44:49 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/17 17:04:05 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include "./math_lib/math_lib.h"
 # include "./mlx/mlx.h"
+# include <stdlib.h>
+# include <unistd.h>
+# include <stdio.h>
 
 # ifndef DIM
 
@@ -39,5 +42,22 @@ typedef struct s_data
 	int		line_length;
 	int		endian;
 }	t_data;
+
+typedef struct	s_vars
+{
+	void	*mlx;
+	void	*win;
+	int		x;
+	int		y;
+}	t_vars;
+
+
+typedef struct s_env
+{
+	t_data	img;
+	t_pxl	col;
+	t_vars	mlx;
+}	t_env;
+
 
 #endif
