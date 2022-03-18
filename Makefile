@@ -6,13 +6,13 @@
 #    By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/15 11:33:10 by mcerchi           #+#    #+#              #
-#    Updated: 2022/03/15 15:54:46 by mcerchi          ###   ########.fr        #
+#    Updated: 2022/03/18 15:19:35 by mcerchi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	fractol
 
-SRC			=	fractol.c
+SRC			=	fractol.c commands.c
 
 OBJ			=	$(SRC:.c=.o)
 

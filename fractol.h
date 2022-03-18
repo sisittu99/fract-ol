@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 15:37:38 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/17 17:04:05 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/18 15:20:05 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,7 @@ typedef struct s_env
 	t_vars	mlx;
 }	t_env;
 
+void	move_map_arrows(int keycode, t_env *e);
+int		ft_command(int keycode, t_env *e);
 
 #endif

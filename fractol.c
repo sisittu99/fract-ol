@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 11:27:28 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/17 18:23:21 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/18 16:16:17 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,79 +58,19 @@ void	ft_circle(t_env *e)
 	int	i;
 	int	j;
 
-	i = 0; j = 0;
-	while (i++ < HEIGHT - 1)
+	i = -1; j = -1;
+	while (i++ < HEIGHT)
 	{
-		while (j++ < WIDTH - 1)
+		while (j++ < WIDTH)
 		{
-			if (i % 100 == 0)
-				e->col.r++;
-			if (j % 105 == 0)
-				e->col.g++;
-			if (i * j % 2 == 1)
-				e->col.b++;
-			if (e->col.r == 255)
-			{
-				e->col.r = 1;
-				e->col.g = 1;
-				e->col.b = 1;
-			}
-			if (pow((i - e->mlx.x), 2) + pow((j - e->mlx.y), 2) < 300*300)
-				my_mlx_pixel_put(&e->img, j, i, ft_colour(e->col));
+			//1) chiamare la funzione di calcolo, ricordandoci di basarci sullo "spazio virtuale" e quindi facendo le giuste proporzioni!
+			//calcolare il colore: partiamo dalláppartenenza o meno al set, poi a seconda delle iterazioni
+			//		vediamo quale colore assegnare.
+			my_mlx_pixel_put(&e->img, j, i, ft_colour(e->col));
 		}
-		j = 0;
+		j = -1;
 	}
 	mlx_put_image_to_window(e->mlx.mlx, e->mlx.win, e->img.img, 0, 0);
-}
-
-//***************************************************************************************
-
-int	ft_command(int keycode, t_env *e)
-{
-	printf("key:\t\t%d\n", keycode);
-	if (keycode == 53)
-	{
-		mlx_destroy_window(e->mlx.mlx, e->mlx.win);
-		write(1, "See ya!\n", 8);
-		exit(0);
-	}
-	else if (keycode == 126)
-	{
-		e->mlx.x -= 100;
-		mlx_clear_window(e->mlx.mlx, e->mlx.win);
-		ft_init_e(e);
-		ft_circle(e);
-		mlx_hook(e->mlx.win, 2, 1L<<0, ft_command, e);
-		mlx_loop(e->mlx.mlx);
-	}
-	else if (keycode == 125)
-	{
-		e->mlx.x += 100;
-		mlx_clear_window(e->mlx.mlx, e->mlx.win);
-		ft_init_e(e);
-		ft_circle(e);
-		mlx_hook(e->mlx.win, 2, 1L<<0, ft_command, e);
-		mlx_loop(e->mlx.mlx);
-	}
-	else if (keycode == 123)
-	{
-		e->mlx.y -= 100;
-		mlx_clear_window(e->mlx.mlx, e->mlx.win);
-		ft_init_e(e);
-		ft_circle(e);
-		mlx_hook(e->mlx.win, 2, 1L<<0, ft_command, e);
-		mlx_loop(e->mlx.mlx);
-	}
-	else if (keycode == 124)
-	{
-		e->mlx.y += 100;
-		mlx_clear_window(e->mlx.mlx, e->mlx.win);
-		ft_init_e(e);
-		ft_circle(e);
-		mlx_hook(e->mlx.win, 2, 1L<<0, ft_command, e);
-		mlx_loop(e->mlx.mlx);
-	}
-	return (0);
 }
 
 //*************************************************************************************
