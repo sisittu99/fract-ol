@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 15:37:38 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/18 15:20:05 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/19 16:04:15 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "./math_lib/math_lib.h"
 # include "./mlx/mlx.h"
+# include "./libft/libft.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -29,6 +30,7 @@
 
 typedef struct s_pxl
 {
+	int	palette;
 	int	r;
 	int	g;
 	int	b;
@@ -47,19 +49,41 @@ typedef struct	s_vars
 {
 	void	*mlx;
 	void	*win;
-	int		x;
-	int		y;
+	t_cpx	virt_max;
+	t_cpx	virt_min;
 }	t_vars;
 
+typedef struct s_bool
+{
+	int		mandelbrot;
+	t_cpx	julia;
+	int		burning;
+}	t_bool;
 
 typedef struct s_env
 {
+	int		(*function)(t_vars mlx, t_bool var, int x, int y);
 	t_data	img;
 	t_pxl	col;
 	t_vars	mlx;
+	t_bool	var;
 }	t_env;
 
-void	move_map_arrows(int keycode, t_env *e);
-int		ft_command(int keycode, t_env *e);
+//calculus.c
+t_cpx			virtual_to_real(t_vars mlx, int x, int y);
+int				ft_mandelbrot_math(t_vars mlx, t_bool var, int x, int y);
+int				ft_julia(t_vars mlx, t_bool var, int x, int y);
+int				ft_burning_ship(t_vars mlx, t_bool var, int x, int y);
+//commands.c
+// void			move_map_arrows(int keycode, t_env *e);
+int				ft_command(int keycode, t_env *e);
+//initialize.c
+void			print_calls(void);
+void			which_function(t_env *e, int argc, char **argv);
+void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void			ft_init_e(t_env *e);
+//fractol.c
+unsigned int	ft_colour(t_pxl x);
+void			print_pxl(t_env *e);
 
 #endif

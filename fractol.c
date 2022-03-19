@@ -6,24 +6,22 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 11:27:28 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/18 16:16:17 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/19 16:17:46 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	ft_init_e(t_env *e)
-{
-	e->col.r = 0;
-	e->col.g = 0;
-	e->col.b = 0;
-	e->mlx.mlx = mlx_init();
-	e->mlx.win = mlx_new_window(e->mlx.mlx, WIDTH, HEIGHT, "Hello world!");
-	e->img.img = mlx_new_image(e->mlx.mlx, WIDTH, HEIGHT);
-	e->img.addr = mlx_get_data_addr(e->img.img, &e->img.bits_per_pixel,
-			&e->img.line_length, &e->img.endian);
-}
 
+t_pxl	which_colour(int it)
+{
+	t_pxl	col;
+
+	col.r = (it * 50) % 255;
+	col.g = (it * 30) % 255;
+	col.b = (it * 20) % 255;
+	return (col);
+}
 
 unsigned int	ft_colour(t_pxl x)
 {
@@ -36,14 +34,6 @@ unsigned int	ft_colour(t_pxl x)
 	return (colour);
 }
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
-}
-
 //**************************************************************************************
 
 
@@ -53,17 +43,19 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 // 	return (0);
 // }
 
-void	ft_circle(t_env *e)
+void	print_pxl(t_env *e)
 {
 	int	i;
 	int	j;
+	int	iterations;
 
 	i = -1; j = -1;
-	while (i++ < HEIGHT)
+	while (++i < HEIGHT)
 	{
-		while (j++ < WIDTH)
+		while (++j < WIDTH)
 		{
-			//1) chiamare la funzione di calcolo, ricordandoci di basarci sullo "spazio virtuale" e quindi facendo le giuste proporzioni!
+			iterations = e->function(e->mlx, e->var, j, i);
+			e->col = which_colour(iterations);
 			//calcolare il colore: partiamo dalláppartenenza o meno al set, poi a seconda delle iterazioni
 			//		vediamo quale colore assegnare.
 			my_mlx_pixel_put(&e->img, j, i, ft_colour(e->col));
@@ -75,13 +67,13 @@ void	ft_circle(t_env *e)
 
 //*************************************************************************************
 
-int	main()
+int	main(int argc, char **argv)
 {
 	t_env	e;
-	e.mlx.x = HEIGHT / 2;
-	e.mlx.y = WIDTH / 2;
+
+	which_function(&e, argc, argv);
 	ft_init_e(&e);
-	ft_circle(&e);
+	print_pxl(&e);
 	mlx_hook(e.mlx.win, 2, 1L<<0, ft_command, &e);
 	mlx_loop(e.mlx.mlx);
 }

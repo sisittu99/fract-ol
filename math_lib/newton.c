@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 12:53:07 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/18 13:11:52 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/19 14:52:35 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,12 @@ int	factorial(int nb)
 
 int	coeff(int n, int k)
 {
+	if (n < 0 || k < 0)
+		return (0);
 	return (factorial(n) / (factorial(n - k) * factorial(k)));
 }
 
+//be careful! This is supposed to be used with complex numbers, so we multiply -1 where needed.
 void	ft_newton_bin(t_cpx *a, int n, double real_c, double img_c)
 {
 	t_cpx	tmp;
@@ -38,6 +41,10 @@ void	ft_newton_bin(t_cpx *a, int n, double real_c, double img_c)
 
 	tmp = *a;
 	k = 0;
+	if (n <= 0)
+	{
+		ft_putstr_fd("wrong exp! Exit", 2);
+	}
 	while (k <= n)
 	{
 		if (k % 4 == 0)

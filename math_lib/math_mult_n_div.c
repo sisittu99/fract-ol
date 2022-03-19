@@ -23,7 +23,7 @@ t_cpx	ft_mult_cpx(t_cpx a, t_cpx b)
 
 t_cpx	ft_div_cpx(t_cpx a, t_cpx b)
 {
-	float	const_div;
+	double	const_div;
 	t_cpx	to_div;
 
 	const_div = 1 / (pow(b.x, 2) + pow(b.y, 2));
@@ -33,7 +33,7 @@ t_cpx	ft_div_cpx(t_cpx a, t_cpx b)
 	return (to_div);
 }
 
-void	ft_sqr_cpx(t_cpx *a, int real_c, int img_c)
+void	ft_sqr_cpx(t_cpx *a, double real_c, double img_c)
 {
 	t_cpx	tmp;
 

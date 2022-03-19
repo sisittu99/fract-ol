@@ -6,13 +6,13 @@
 #    By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/15 12:05:33 by mcerchi           #+#    #+#              #
-#    Updated: 2022/03/15 15:45:15 by mcerchi          ###   ########.fr        #
+#    Updated: 2022/03/19 16:05:45 by mcerchi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	math_lib.a
 
-SRC		=	basic_math.c math_mult_n_div.c\
+SRC		=	basic_math.c math_mult_n_div.c newton.c\
 
 OBJ		=	$(SRC:.c=.o)
 
