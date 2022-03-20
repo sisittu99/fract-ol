@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   netwon.c                                           :+:      :+:    :+:   */
+/*   newton.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 12:53:07 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/19 14:52:35 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/20 10:32:09 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	coeff(int n, int k)
 		return (0);
 	return (factorial(n) / (factorial(n - k) * factorial(k)));
 }
-
+#include <stdio.h>
 //be careful! This is supposed to be used with complex numbers, so we multiply -1 where needed.
 void	ft_newton_bin(t_cpx *a, int n, double real_c, double img_c)
 {
@@ -48,15 +48,40 @@ void	ft_newton_bin(t_cpx *a, int n, double real_c, double img_c)
 	while (k <= n)
 	{
 		if (k % 4 == 0)
-			a->x += coeff(n, k) * pow(tmp.x, n - k) * pow(tmp.y, k);
+			tmp.x = coeff(n, k) * pow(a->x, n - k) * pow(a->y, k);
 		else if (k % 4 == 2)
-			a->x += coeff(n, k) * pow(tmp.x, n - k) * pow(tmp.y, k) * -1;
+			tmp.x = coeff(n, k) * pow(a->x, n - k) * pow(a->y, k) * -1;
 		else if (k % 4 == 1)
-			a->y += coeff(n, k) * pow(tmp.x, n - k) * pow(tmp.y, k);
+			tmp.y = coeff(n, k) * pow(a->x, n - k) * pow(a->y, k);
 		else if (k % 4 == 3)
-			a->y += coeff(n, k) * pow(tmp.x, n - k) * pow(tmp.y, k) * -1;
+			tmp.y = coeff(n, k) * pow(a->x, n - k) * pow(a->y, k) * -1;
+		*a = tmp;
+		tmp = *a;
+		printf("a.x = %f\na.y = %f\n", a->x, a->y);
 		k++;
 	}
 	a->x += real_c;
 	a->y += img_c;
 }
+
+// int main()
+// {
+// 	t_cpx a, b, constant;
+// 	double tmp;
+
+// 	a.x = 1.0;
+// 	a.y = 1.0;
+// 	b.x = 1.0;
+// 	b.y = 1.0;
+// 	// tmp = 0.0;
+// 	constant.x = 4;
+// 	constant.y = 4;
+
+// 	tmp = b.x * b.x - b.y * b.y + constant.x;
+// 	b.y = 2 * b.y * b.x + constant.y;
+// 	b.x = tmp;
+// 	ft_newton_bin(&a, 2, constant.x, constant.y);
+// 	printf("\n\na.x=\t%f\t\ta.y=\t%f\n", a.x, a.y);
+// 	printf("b.x=\t%f\t\tb.y=\t%f\n", b.x, b.y);
+// }
+

@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 15:37:38 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/19 16:04:15 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/20 14:26:09 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # ifndef DIM
 
 #  define DIM
-#  define WIDTH 1920
-#  define HEIGHT 1080
+#  define WIDTH 1080
+#  define HEIGHT 720
 
 # endif
 
@@ -75,6 +75,7 @@ int				ft_mandelbrot_math(t_vars mlx, t_bool var, int x, int y);
 int				ft_julia(t_vars mlx, t_bool var, int x, int y);
 int				ft_burning_ship(t_vars mlx, t_bool var, int x, int y);
 //commands.c
+int				ft_mouse_manage(int keycode, int x, int y, t_env *e)
 // void			move_map_arrows(int keycode, t_env *e);
 int				ft_command(int keycode, t_env *e);
 //initialize.c

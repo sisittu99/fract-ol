@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 13:11:41 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/19 16:14:28 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/20 11:02:04 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,13 @@ void	ft_init_e(t_env *e)
 	e->col.r = 0;
 	e->col.g = 0;
 	e->col.b = 0;
+	e->col.palette = 1;
 	e->mlx.mlx = mlx_init();
 	e->mlx.win = mlx_new_window(e->mlx.mlx, WIDTH, HEIGHT, "So, you chose truth");
 	e->mlx.virt_min.x = -2;
-	e->mlx.virt_max.x = 0.5;
-	e->mlx.virt_min.y = -1.2;
-	e->mlx.virt_max.y = 1.2;
+	e->mlx.virt_max.x = 2;
+	e->mlx.virt_min.y = -2;
+	e->mlx.virt_max.y = 2;
 	e->img.img = mlx_new_image(e->mlx.mlx, WIDTH, HEIGHT);
 	e->img.addr = mlx_get_data_addr(e->img.img, &e->img.bits_per_pixel,
 			&e->img.line_length, &e->img.endian);

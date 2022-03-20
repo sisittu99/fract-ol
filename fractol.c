@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 11:27:28 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/19 16:17:46 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/20 14:25:21 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ t_pxl	which_colour(int it)
 {
 	t_pxl	col;
 
-	col.r = (it * 50) % 255;
-	col.g = (it * 30) % 255;
-	col.b = (it * 20) % 255;
+	col.r = (it % 255) * 3;
+	col.g = (it % 255) * 3;
+	col.b = (it % 255) * 3;
 	return (col);
 }
 
@@ -75,5 +75,6 @@ int	main(int argc, char **argv)
 	ft_init_e(&e);
 	print_pxl(&e);
 	mlx_hook(e.mlx.win, 2, 1L<<0, ft_command, &e);
+	mlx_mouse_hook(e.mlx.win, mouse_manage, &e);
 	mlx_loop(e.mlx.mlx);
 }

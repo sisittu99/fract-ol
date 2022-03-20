@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:18:35 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/19 15:41:01 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/20 14:29:11 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@
 // 	mlx_hook(e->mlx.win, 2, 1L<<0, ft_command, e);
 // 	mlx_loop(e->mlx.mlx);
 // }
+
+int	ft_mouse_manage(int keycode, int x, int y, t_env *e)
+{
+	if (keycode == 4)
+		zoom_plus(x, y, e);
+	if (keycode == 5)
+		zoom_minus(x, y, e);
+}
 
 int	ft_command(int keycode, t_env *e)
 {

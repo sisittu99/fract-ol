@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 10:43:53 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/19 15:59:32 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/20 11:05:33 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,21 @@ int	ft_mandelbrot_math(t_vars mlx, t_bool var, int x, int y)
 	int		i;
 	t_cpx	val;
 	t_cpx	constant;
+	double	tmp;
 
 	i = 0;
 	val.x = 0.0;
 	val.y = 0.0;
+	tmp = 0.0;
 	constant = virtual_to_real(mlx, x, y);
 
 
-	while (i < 100)
+	while (i < 1000 && var.mandelbrot == 2)
 	{
-		ft_newton_bin(&val, var.mandelbrot, constant.x, constant.y);
+		// ft_newton_bin(&val, var.mandelbrot, constant.x, constant.y);
+		tmp = val.x * val.x - val.y * val.y + constant.x;
+		val.y = 2 * val.y * val.x + constant.y;
+		val.x = tmp;
 		if (pow(val.x, 2) + pow(val.y, 2) > 2.0*2.0)
 			break ;
 		i++;
@@ -48,14 +53,19 @@ int	ft_julia(t_vars mlx, t_bool var, int x, int y)
 	int		i;
 	t_cpx	val;
 	t_cpx	constant;
+	double	tmp;
 
 	i = 0;
+	tmp = 0.0;
 	val = virtual_to_real(mlx, x, y);
 	constant = var.julia;
 
 	while (i < 100)
 	{
-		ft_newton_bin(&val, 2, constant.x, constant.y);
+		// ft_newton_bin(&val, 2, constant.x, constant.y);
+		tmp = val.x * val.x - val.y * val.y + constant.x;
+		val.y = 2 * val.y * val.x + constant.y;
+		val.x = tmp;
 		if (pow(val.x, 2) + pow(val.y, 2) > 2.0*2.0)
 			break ;
 		i++;
@@ -68,21 +78,23 @@ int	ft_burning_ship(t_vars mlx, t_bool var, int x, int y)
 	int		i;
 	t_cpx	val;
 	t_cpx	constant;
+	double	tmp;
 
 	i = 0;
+	tmp = 0.0;
 	val.x = 0.0;
 	val.y = 0.0;
 	constant = virtual_to_real(mlx, x, y);
 
 
-	while (i < 100)
+	while (i < 100 && var.julia.x == 0.0)
 	{
-		ft_newton_bin(&val, var.mandelbrot, constant.x, constant.y);
+		tmp = fabs(val.x * val.x - val.y * val.y + constant.x);
+		val.y = fabs(2 * val.y * val.x + constant.y);
+		val.x = tmp;
 		if (pow(val.x, 2) + pow(val.y, 2) > 2.0*2.0)
 			break ;
 		i++;
 	}
-	val.x = fabs(val.x);
-	val.y = fabs(val.y);
 	return (i);
 }
