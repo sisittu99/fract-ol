@@ -56,8 +56,6 @@ void	print_pxl(t_env *e)
 		{
 			iterations = e->function(e->mlx, e->var, j, i);
 			e->col = which_colour(iterations);
-			//calcolare il colore: partiamo dalláppartenenza o meno al set, poi a seconda delle iterazioni
-			//		vediamo quale colore assegnare.
 			my_mlx_pixel_put(&e->img, j, i, ft_colour(e->col));
 		}
 		j = -1;

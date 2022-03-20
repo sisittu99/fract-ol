@@ -29,6 +29,28 @@
 // 	mlx_loop(e->mlx.mlx);
 // }
 
+void	zoom_plus(int x, int y, t_env *e)
+{
+	t_cpx	virt_pos;
+	double	zoom_fact;
+	
+	zoom_fact = 0.95;
+	//creiamo il delta al quale poi applicare il fattore zoom
+	virt_pos = ft_sub_cpx(e->mlx.virt_max, e->mlx.virt_min);
+	virt_pos.x = x * virt_pos.x / WIDTH;
+	virt_pos.y = y * virt_pos.y / HEIGHT;
+	virt_pos = ft_add_cpx(virt_pos, e->mlx.virt_min);
+	e->mlx.zoom *= zoom_fact;
+	//ora lo applichiamo a virt_max&min
+	e->mlx.virt_max.x = e->mlx.virt_max.x * zoom_fact + virt_pos.x * (1 - zoom_fact);
+	e->mlx.virt_max.y = e->mlx.virt_max.y * zoom_fact + virt_pos.y * (1 - zoom_fact);
+	e->mlx.virt_min.x = e->mlx.virt_min.x * zoom_fact + virt_pos.x * (1 - zoom_fact);
+	e->mlx.virt_min.y = e->mlx.virt_min.y * zoom_fact + virt_pos.y * (1 - zoom_fact);
+	//piccolo spieghino reminder:
+	//virt_max è stato modificato secondo lo zoom factor, il che basterebbe per zoomare.
+	//Tuttavia, per permettere lo zoom nella posizione del mouse (dettata dalle coordinate e ricalcolate in virt_pos)
+}
+
 int	ft_mouse_manage(int keycode, int x, int y, t_env *e)
 {
 	if (keycode == 4)

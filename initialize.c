@@ -82,6 +82,7 @@ void	ft_init_e(t_env *e)
 	e->mlx.virt_max.x = 2;
 	e->mlx.virt_min.y = -2;
 	e->mlx.virt_max.y = 2;
+	e->mlx.zoom = 1.0;
 	e->img.img = mlx_new_image(e->mlx.mlx, WIDTH, HEIGHT);
 	e->img.addr = mlx_get_data_addr(e->img.img, &e->img.bits_per_pixel,
 			&e->img.line_length, &e->img.endian);

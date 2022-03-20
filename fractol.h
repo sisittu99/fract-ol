@@ -51,6 +51,7 @@ typedef struct	s_vars
 	void	*win;
 	t_cpx	virt_max;
 	t_cpx	virt_min;
+	double	zoom;
 }	t_vars;
 
 typedef struct s_bool
