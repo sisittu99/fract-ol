@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:18:35 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/22 15:35:44 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/22 17:36:12 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@
 
 void	ft_zoom(int x, int y, t_env *e, int isplus)
 {
-	t_cpx	virt_pos;
-	double	zoom_fact;
+	t_cpx		virt_pos;
+	long double	zoom_fact;
+	
 	if (isplus == 1)
 		zoom_fact = 0.9f;
 	else
@@ -40,18 +41,19 @@ void	ft_zoom(int x, int y, t_env *e, int isplus)
 	if (e->mlx.zoom <= 2.0f)
 	{
 		//creiamo il delta al quale poi applicare il fattore zoom
-		virt_pos.x = x * (e->mlx.virt_max.x - e->mlx.virt_min.x) / WIDTH - e->mlx.virt_min.x;
-		virt_pos.y = y * (e->mlx.virt_max.y - e->mlx.virt_min.y) / WIDTH - e->mlx.virt_min.y;
+		virt_pos = virtual_to_real(e->mlx, x, y);
 		e->mlx.zoom *= zoom_fact;
 		//ora lo applichiamo a virt_max&min
-		e->mlx.virt_max.x *= (1 - ((e->mlx.virt_max.x - virt_pos.x) * 2 * (1 - zoom_fact)) / (e->mlx.virt_max.x - e->mlx.virt_min.x));
-		e->mlx.virt_max.y *= (1 - ((e->mlx.virt_max.y - virt_pos.y) * 2 * (1 - zoom_fact)) / (e->mlx.virt_max.y - e->mlx.virt_min.y));
-		e->mlx.virt_min.x *= (1 - ((virt_pos.x - e->mlx.virt_min.x) * 2 * (1 - zoom_fact)) / (e->mlx.virt_max.x - e->mlx.virt_min.x));
-		e->mlx.virt_min.y *= (1 - ((virt_pos.y - e->mlx.virt_min.y) * 2 * (1 - zoom_fact)) / (e->mlx.virt_max.y - e->mlx.virt_min.y));
+		e->mlx.virt_max.x = e->mlx.virt_max.x * zoom_fact + virt_pos.x * (1 - zoom_fact);
+		e->mlx.virt_max.y = e->mlx.virt_max.y * zoom_fact + virt_pos.y * (1 - zoom_fact);
+		e->mlx.virt_min.x = e->mlx.virt_min.x * zoom_fact + virt_pos.x * (1 - zoom_fact);
+		e->mlx.virt_min.y = e->mlx.virt_min.y * zoom_fact + virt_pos.y * (1 - zoom_fact);
 		//piccolo spieghino reminder:
 		//virt_max è stato modificato secondo lo zoom factor, il che basterebbe per zoomare.
 		//Tuttavia, per permettere lo zoom nella posizione del mouse (dettata dalle coordinate e ricalcolate in virt_pos)
 		//bisogna trovare un modo per rimanere nel punto zoomato. Questo forse non sarà preciso, ma di sicuro ci si avvicina!
+
+		//e->mlx.virt_min.x = (1 - ((virt_pos.x - e->mlx.virt_min.x) * 2 * (1 - zoom_fact)) / (e->mlx.virt_max.x - e->mlx.virt_min.x));
 		print_pxl(e);
 	}
 }
@@ -59,6 +61,7 @@ void	ft_zoom(int x, int y, t_env *e, int isplus)
 int	ft_mouse_manage(int keycode, int x, int y, t_env *e)
 {
 	printf("key:\t\t%d\n", keycode);
+	printf("coord_x:\t%d\t\t\tcorrd_y:\t%d\n", x, y);
 	if (keycode == 4)
 		ft_zoom(x, y, e, 1);
 	if (keycode == 5)

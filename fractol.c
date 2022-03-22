@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 11:27:28 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/22 12:41:07 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/22 17:38:17 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,29 @@ void	print_pxl(t_env *e)
 	i = -1;
 	j = -1;
 	mlx_clear_window(e->mlx.mlx, e->mlx.win);
+	printf("min_x:\t%Lf\t\t\tmax_x:\t%Lf\n", e->mlx.virt_min.x, e->mlx.virt_max.x);
+	printf("min_y:\t%Lf\t\t\tmax_y:\t%Lf\n", e->mlx.virt_min.y, e->mlx.virt_max.y);
+
 	while (++i < HEIGHT)
 	{
 		while (++j < WIDTH)
 		{
-			iterations = e->function(e->mlx, e->var, j, i);
-			e->col = which_colour(iterations);
-			my_mlx_pixel_put(&e->img, j, i, ft_colour(e->col));
+			t_cpx res;
+
+			res = virtual_to_real(e->mlx, j, i);
+			if (res.x == 0 || res.y == 0)
+			{
+				e->col.r = 255;
+				e->col.g = 0;
+				e->col.b = 0;
+				my_mlx_pixel_put(&e->img, j, i, ft_colour(e->col));
+			}
+			else
+			{
+				iterations = e->function(e->mlx, e->var, j, i);
+				e->col = which_colour(iterations);
+				my_mlx_pixel_put(&e->img, j, i, ft_colour(e->col));
+			}
 		}
 		j = -1;
 	}

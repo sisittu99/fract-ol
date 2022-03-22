@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 15:37:38 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/22 11:53:41 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/22 17:35:36 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # ifndef DIM
 
 #  define DIM
-#  define WIDTH 1080
+#  define WIDTH 720
 #  define HEIGHT 720
 
 # endif
@@ -51,7 +51,7 @@ typedef struct	s_vars
 	void	*win;
 	t_cpx	virt_max;
 	t_cpx	virt_min;
-	double	zoom;
+	long double	zoom;
 }	t_vars;
 
 typedef struct s_bool

@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 10:43:53 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/20 11:05:33 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/22 17:43:10 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,16 @@ t_cpx	virtual_to_real(t_vars mlx, int x, int y)
 
 int	ft_mandelbrot_math(t_vars mlx, t_bool var, int x, int y)
 {
-	int		i;
-	t_cpx	val;
-	t_cpx	constant;
-	double	tmp;
+	int			i;
+	t_cpx		val;
+	t_cpx		constant;
+	long double	tmp;
 
 	i = 0;
 	val.x = 0.0;
 	val.y = 0.0;
 	tmp = 0.0;
 	constant = virtual_to_real(mlx, x, y);
-
 
 	while (i < 1000 && var.mandelbrot == 2)
 	{
@@ -50,10 +49,10 @@ int	ft_mandelbrot_math(t_vars mlx, t_bool var, int x, int y)
 
 int	ft_julia(t_vars mlx, t_bool var, int x, int y)
 {
-	int		i;
-	t_cpx	val;
-	t_cpx	constant;
-	double	tmp;
+	int			i;
+	t_cpx		val;
+	t_cpx		constant;
+	long double	tmp;
 
 	i = 0;
 	tmp = 0.0;
@@ -75,10 +74,10 @@ int	ft_julia(t_vars mlx, t_bool var, int x, int y)
 
 int	ft_burning_ship(t_vars mlx, t_bool var, int x, int y)
 {
-	int		i;
-	t_cpx	val;
-	t_cpx	constant;
-	double	tmp;
+	int			i;
+	t_cpx		val;
+	t_cpx		constant;
+	long double	tmp;
 
 	i = 0;
 	tmp = 0.0;
@@ -89,8 +88,8 @@ int	ft_burning_ship(t_vars mlx, t_bool var, int x, int y)
 
 	while (i < 100 && var.julia.x == 0.0)
 	{
-		tmp = fabs(val.x * val.x - val.y * val.y + constant.x);
-		val.y = fabs(2 * val.y * val.x + constant.y);
+		tmp = fabsl(val.x * val.x - val.y * val.y + constant.x);
+		val.y = fabsl(2 * val.y * val.x + constant.y);
 		val.x = tmp;
 		if (pow(val.x, 2) + pow(val.y, 2) > 2.0*2.0)
 			break ;
