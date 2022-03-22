@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 13:11:41 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/20 11:02:04 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/22 14:55:17 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	ft_init_e(t_env *e)
 	e->mlx.virt_max.x = 2;
 	e->mlx.virt_min.y = -2;
 	e->mlx.virt_max.y = 2;
-	e->mlx.zoom = 1.0;
+	e->mlx.zoom = 1.0f;
 	e->img.img = mlx_new_image(e->mlx.mlx, WIDTH, HEIGHT);
 	e->img.addr = mlx_get_data_addr(e->img.img, &e->img.bits_per_pixel,
 			&e->img.line_length, &e->img.endian);

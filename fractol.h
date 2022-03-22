@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 15:37:38 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/20 14:26:09 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/22 11:53:41 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int				ft_mandelbrot_math(t_vars mlx, t_bool var, int x, int y);
 int				ft_julia(t_vars mlx, t_bool var, int x, int y);
 int				ft_burning_ship(t_vars mlx, t_bool var, int x, int y);
 //commands.c
-int				ft_mouse_manage(int keycode, int x, int y, t_env *e)
+int				ft_mouse_manage(int keycode, int x, int y, t_env *e);
 // void			move_map_arrows(int keycode, t_env *e);
 int				ft_command(int keycode, t_env *e);
 //initialize.c

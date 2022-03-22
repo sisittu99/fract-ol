@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 11:27:28 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/20 14:25:21 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/22 12:41:07 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ void	print_pxl(t_env *e)
 	int	j;
 	int	iterations;
 
-	i = -1; j = -1;
+	i = -1;
+	j = -1;
+	mlx_clear_window(e->mlx.mlx, e->mlx.win);
 	while (++i < HEIGHT)
 	{
 		while (++j < WIDTH)
@@ -73,6 +75,6 @@ int	main(int argc, char **argv)
 	ft_init_e(&e);
 	print_pxl(&e);
 	mlx_hook(e.mlx.win, 2, 1L<<0, ft_command, &e);
-	mlx_mouse_hook(e.mlx.win, mouse_manage, &e);
+	mlx_mouse_hook(e.mlx.win, ft_mouse_manage, &e);
 	mlx_loop(e.mlx.mlx);
 }
