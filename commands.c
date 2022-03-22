@@ -6,34 +6,42 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:18:35 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/22 17:36:12 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/22 20:09:25 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-// void	move_map_arrows(int keycode, t_env *e)
-// {
-// 	if (keycode == 126)
-// 		e->mlx.virt_max -= 20;
-// 	else if (keycode == 125)
-// 		e->mlx.x += 20;
-// 	else if (keycode == 123)
-// 		e->mlx.y -= 20;
-// 	else if (keycode == 124)
-// 		e->mlx.y += 20;
-// 	mlx_clear_window(e->mlx.mlx, e->mlx.win);
-// //		ft_init_e(e);
-// 	print_pxl(e);
-// 	mlx_hook(e->mlx.win, 2, 1L<<0, ft_command, e);
-// 	mlx_loop(e->mlx.mlx);
-// }
+void	move_map_arrows(int keycode, t_env *e)
+{
+	if (keycode == 126)
+	{
+		e->mlx.virt_min.x -= 0.1 * e->mlx.zoom;
+		e->mlx.virt_max.x -= 0.1 * e->mlx.zoom;
+	}
+	else if (keycode == 125)
+	{
+		e->mlx.virt_min.x += 0.1 * e->mlx.zoom;
+		e->mlx.virt_max.x += 0.1 * e->mlx.zoom;
+	}
+	else if (keycode == 123)
+	{
+		e->mlx.virt_min.y -= 0.1 * e->mlx.zoom;
+		e->mlx.virt_max.y -= 0.1 * e->mlx.zoom;
+	}
+	else if (keycode == 124)
+	{
+		e->mlx.virt_min.y += 0.1 * e->mlx.zoom;
+		e->mlx.virt_max.y += 0.1 * e->mlx.zoom;
+	}
+	print_pxl(e);
+}
 
 void	ft_zoom(int x, int y, t_env *e, int isplus)
 {
 	t_cpx		virt_pos;
 	long double	zoom_fact;
-	
+
 	if (isplus == 1)
 		zoom_fact = 0.9f;
 	else
@@ -58,6 +66,26 @@ void	ft_zoom(int x, int y, t_env *e, int isplus)
 	}
 }
 
+int	new_julia(t_env *e, int x, int y)
+{
+		write(1, "sono qui\n", 9);
+		if (e->var.mandelbrot)
+			e->var.mandelbrot = 0;
+		e->function = &ft_julia;
+		e->var.julia = virtual_to_real(e->mlx, x, y);
+		write(1, "ancora qui\n", 11);
+		print_pxl(e);
+		write(1, "fine\n", 5);
+		return (0);
+}
+
+int	destroy_win(t_env *e)
+{
+	mlx_destroy_window(e->mlx.mlx, e->mlx.win);
+	write(1, "See ya!\n", 8);
+	exit(0);
+}
+
 int	ft_mouse_manage(int keycode, int x, int y, t_env *e)
 {
 	printf("key:\t\t%d\n", keycode);
@@ -66,19 +94,40 @@ int	ft_mouse_manage(int keycode, int x, int y, t_env *e)
 		ft_zoom(x, y, e, 1);
 	if (keycode == 5)
 		ft_zoom(x, y, e, 0);
+	if (keycode == 1 && e->var.mandelbrot > 0)
+		new_julia(e, x, y);
 	return (0);
 }
 
-int	ft_command(int keycode, t_env *e)
+void palette(int keycode, t_env *e)
+{
+	if (keycode == 29)
+		e->col.palette = 0;
+	if (keycode == 18)
+		e->col.palette = 1;
+	if (keycode == 19)
+		e->col.palette = 2;
+	if (keycode == 20)
+		e->col.palette = 3;
+	print_pxl(e);
+}
+
+int	ft_command(int keycode, int x, int y, t_env *e)
 {
 	printf("key:\t\t%d\n", keycode);
 	if (keycode == 53)
+		destroy_win(e);
+	else if (keycode == 49)
 	{
-		mlx_destroy_window(e->mlx.mlx, e->mlx.win);
-		write(1, "See ya!\n", 8);
-		exit(0);
+		which_function(e);
+		ft_init_e(e);
+		print_pxl(e);
 	}
-	// else if (keycode <= 126 && keycode >= 123)
-	// 	move_map_arrows(keycode, e);
-	return (0);
+	else if (keycode >= 18 && keycode <= 29)
+		palette(keycode, e);
+	else if (keycode == 256 && (!e->var.burning && !e->var.mandelbrot))
+		new_julia(e, x, y);
+	else if (keycode <= 126 && keycode >= 123)
+		move_map_arrows(keycode, e);
+	return (-1);
 }

@@ -6,21 +6,41 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 11:27:28 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/22 17:38:17 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/22 20:05:14 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
 
-t_pxl	which_colour(int it)
+void	which_colour(int it, t_env *e)
 {
-	t_pxl	col;
+	if (e->col.palette == 0)
+	{
+		e->col.r = (it % 255) * 3;
+		e->col.g = (it % 255) * 3;
+		e->col.b = (it % 255) * 3;
+	}
+	else if (e->col.palette == 1)
+	{
+		e->col.r = (it * 7 % 255);
+		e->col.g = (it % 255);
+		e->col.b = (it % 255);
+	}
+	else if (e->col.palette == 2)
+	{
+		e->col.r = (it % 255);
+		e->col.g = (it * 7 % 255);
+		e->col.b = (it % 255);
+	}
+	else if (e->col.palette == 3)
+	{
+		e->col.r = (it % 255);
+		e->col.g = (it % 255);
+		e->col.b = (it * 7 % 255);
+	}
 
-	col.r = (it % 255) * 3;
-	col.g = (it % 255) * 3;
-	col.b = (it % 255) * 3;
-	return (col);
+	return ;
 }
 
 unsigned int	ft_colour(t_pxl x)
@@ -72,7 +92,7 @@ void	print_pxl(t_env *e)
 			else
 			{
 				iterations = e->function(e->mlx, e->var, j, i);
-				e->col = which_colour(iterations);
+				which_colour(iterations, e);
 				my_mlx_pixel_put(&e->img, j, i, ft_colour(e->col));
 			}
 		}
@@ -87,10 +107,13 @@ int	main(int argc, char **argv)
 {
 	t_env	e;
 
-	which_function(&e, argc, argv);
+	e.argc = argc;
+	e.argv = argv;
+	which_function(&e);
 	ft_init_e(&e);
 	print_pxl(&e);
 	mlx_hook(e.mlx.win, 2, 1L<<0, ft_command, &e);
+	mlx_hook(e.mlx.win, 17, 1L<<0, destroy_win, &e);
 	mlx_mouse_hook(e.mlx.win, ft_mouse_manage, &e);
 	mlx_loop(e.mlx.mlx);
 }

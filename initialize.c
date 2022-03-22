@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 13:11:41 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/22 14:55:17 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/22 18:36:16 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,44 +22,44 @@ void	print_calls(void)
 	exit(0);
 }
 
-void	which_function(t_env *e, int argc, char **argv)
+void	which_function(t_env *e)
 {
 	e->var.mandelbrot = 0;
 	e->var.julia.x = 0;
 	e->var.julia.y = 0;
 	e->var.burning = 0;
-	write(1, "test1\n", 6);
-	if (argc < 2)
+	if (e->mlx.win)
+		mlx_destroy_window(e->mlx.mlx, e->mlx.win);
+	if (e->argc < 2)
 		print_calls();
-	else if (!ft_strncmp(argv[1], "mandelbrot", 10))
+	else if (!ft_strncmp(e->argv[1], "mandelbrot", 10))
 	{
-		write(1, "test2\n", 6);
-		if (!argv[2])
+		if (!e->argv[2])
 			print_calls();
-		if (argv[2][0] > '0' && argv[2][0] <= '9')
+		if (e->argv[2][0] > '0' && e->argv[2][0] <= '9')
 		{
-			e->var.mandelbrot = ft_atoi(argv[2]);
+			e->var.mandelbrot = ft_atoi(e->argv[2]);
 			e->function = &ft_mandelbrot_math;
+			return ;
 		}
 		else
 			print_calls();
 	}
-	else if (!ft_strncmp(argv[1], "julia", 5))
+	else if (!ft_strncmp(e->argv[1], "julia", 5))
 	{
 		e->var.julia.x = 0.285;
 		e->var.julia.y = 0.01;
 		e->function = &ft_julia;
-			write(1, "test3\n", 6);
+		return ;
 	}
-	else if (!ft_strncmp(argv[1], "burning_ship", 13))
+	else if (!ft_strncmp(e->argv[1], "burning_ship", 13))
 	{
 		e->var.burning = 1;
 		e->function = &ft_burning_ship;
-		write(1, "test4\n", 6);
+		return ;
 	}
 	else
 		print_calls();
-	write(1, "test5\n", 6);
 }
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)

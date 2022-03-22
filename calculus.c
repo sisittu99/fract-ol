@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 10:43:53 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/22 17:43:10 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/22 18:18:15 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_mandelbrot_math(t_vars mlx, t_bool var, int x, int y)
 	tmp = 0.0;
 	constant = virtual_to_real(mlx, x, y);
 
-	while (i < 1000 && var.mandelbrot == 2)
+	while (i < 50 && var.mandelbrot == 2)
 	{
 		// ft_newton_bin(&val, var.mandelbrot, constant.x, constant.y);
 		tmp = val.x * val.x - val.y * val.y + constant.x;
@@ -59,7 +59,7 @@ int	ft_julia(t_vars mlx, t_bool var, int x, int y)
 	val = virtual_to_real(mlx, x, y);
 	constant = var.julia;
 
-	while (i < 100)
+	while (i < 50)
 	{
 		// ft_newton_bin(&val, 2, constant.x, constant.y);
 		tmp = val.x * val.x - val.y * val.y + constant.x;
@@ -86,7 +86,7 @@ int	ft_burning_ship(t_vars mlx, t_bool var, int x, int y)
 	constant = virtual_to_real(mlx, x, y);
 
 
-	while (i < 100 && var.julia.x == 0.0)
+	while (i < 50 && var.julia.x == 0.0)
 	{
 		tmp = fabsl(val.x * val.x - val.y * val.y + constant.x);
 		val.y = fabsl(2 * val.y * val.x + constant.y);

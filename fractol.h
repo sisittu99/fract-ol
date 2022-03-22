@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 15:37:38 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/22 17:35:36 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/22 18:42:32 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ typedef struct s_data
 
 typedef struct	s_vars
 {
-	void	*mlx;
-	void	*win;
-	t_cpx	virt_max;
-	t_cpx	virt_min;
+	void		*mlx;
+	void		*win;
+	t_cpx		virt_max;
+	t_cpx		virt_min;
 	long double	zoom;
 }	t_vars;
 
@@ -68,6 +68,8 @@ typedef struct s_env
 	t_pxl	col;
 	t_vars	mlx;
 	t_bool	var;
+	int		argc;
+	char	**argv;
 }	t_env;
 
 //calculus.c
@@ -77,11 +79,13 @@ int				ft_julia(t_vars mlx, t_bool var, int x, int y);
 int				ft_burning_ship(t_vars mlx, t_bool var, int x, int y);
 //commands.c
 int				ft_mouse_manage(int keycode, int x, int y, t_env *e);
-// void			move_map_arrows(int keycode, t_env *e);
-int				ft_command(int keycode, t_env *e);
+int				new_julia(t_env *e, int x, int y);
+int				destroy_win(t_env *e);
+void			move_map_arrows(int keycode, t_env *e);
+int				ft_command(int keycode, int x, int y, t_env *e);
 //initialize.c
 void			print_calls(void);
-void			which_function(t_env *e, int argc, char **argv);
+void			which_function(t_env *e);
 void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void			ft_init_e(t_env *e);
 //fractol.c
