@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 11:27:28 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/22 20:05:14 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/23 19:24:59 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	which_colour(int it, t_env *e)
 		e->col.g = (it % 255);
 		e->col.b = (it * 7 % 255);
 	}
-
 	return ;
 }
 
@@ -56,13 +55,6 @@ unsigned int	ft_colour(t_pxl x)
 
 //**************************************************************************************
 
-
-// int	mouse_hook(int keycode)
-// {
-// 	printf("mouse key:\t%d\n", keycode);
-// 	return (0);
-// }
-
 void	print_pxl(t_env *e)
 {
 	int	i;
@@ -71,19 +63,23 @@ void	print_pxl(t_env *e)
 
 	i = -1;
 	j = -1;
+	int ciao = 0;
 	mlx_clear_window(e->mlx.mlx, e->mlx.win);
 	printf("min_x:\t%Lf\t\t\tmax_x:\t%Lf\n", e->mlx.virt_min.x, e->mlx.virt_max.x);
 	printf("min_y:\t%Lf\t\t\tmax_y:\t%Lf\n", e->mlx.virt_min.y, e->mlx.virt_max.y);
-
+	t_cpx res;
 	while (++i < HEIGHT)
 	{
 		while (++j < WIDTH)
 		{
-			t_cpx res;
-
 			res = virtual_to_real(e->mlx, j, i);
-			if (res.x == 0 || res.y == 0)
+			if ((res.x > -0.001 && res.x < 0.001) || (res.y > -0.001 && res.y < 0.001))
 			{
+				if (ciao == 0)
+				{
+					ft_putstr_fd("case zero done!\n", 1);
+					ciao = 1;
+				}
 				e->col.r = 255;
 				e->col.g = 0;
 				e->col.b = 0;
@@ -101,6 +97,35 @@ void	print_pxl(t_env *e)
 	mlx_put_image_to_window(e->mlx.mlx, e->mlx.win, e->img.img, 0, 0);
 }
 
+// char	**ft_copy_argv(int argc, char **argv)
+// {
+// 	char	**res;
+// 	int		i;
+
+// 	i = 0;
+// 	res = (char **)malloc (sizeof(char *) * argc);
+// 	if (!res)
+// 		return (NULL);
+// 	while (i < argc)
+// 	{
+// 		res[i] = ft_substr(argv[i], 0, ft_strlen(argv[i]));
+// 		i++;
+// 	}
+// 	res[i] = NULL;
+// 	return (res);
+// }
+
+// void	free_matrix(void **matrix)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (matrix[i])
+// 		free(matrix[i++]);
+// 	if (matrix)
+// 		free(matrix);
+// }
+
 //*************************************************************************************
 
 int	main(int argc, char **argv)
@@ -112,8 +137,9 @@ int	main(int argc, char **argv)
 	which_function(&e);
 	ft_init_e(&e);
 	print_pxl(&e);
-	mlx_hook(e.mlx.win, 2, 1L<<0, ft_command, &e);
+	mlx_hook(e.mlx.win, 2, 0, ft_command, &e);
 	mlx_hook(e.mlx.win, 17, 1L<<0, destroy_win, &e);
 	mlx_mouse_hook(e.mlx.win, ft_mouse_manage, &e);
 	mlx_loop(e.mlx.mlx);
+	// free_matrix((void **)e.argv);
 }

@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:18:35 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/22 20:09:25 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/23 20:04:57 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 void	move_map_arrows(int keycode, t_env *e)
 {
-	if (keycode == 126)
+	if (keycode == 124)
 	{
 		e->mlx.virt_min.x -= 0.1 * e->mlx.zoom;
 		e->mlx.virt_max.x -= 0.1 * e->mlx.zoom;
 	}
-	else if (keycode == 125)
+	else if (keycode == 123)
 	{
 		e->mlx.virt_min.x += 0.1 * e->mlx.zoom;
 		e->mlx.virt_max.x += 0.1 * e->mlx.zoom;
 	}
-	else if (keycode == 123)
+	else if (keycode == 126)
 	{
 		e->mlx.virt_min.y -= 0.1 * e->mlx.zoom;
 		e->mlx.virt_max.y -= 0.1 * e->mlx.zoom;
 	}
-	else if (keycode == 124)
+	else if (keycode == 125)
 	{
 		e->mlx.virt_min.y += 0.1 * e->mlx.zoom;
 		e->mlx.virt_max.y += 0.1 * e->mlx.zoom;
@@ -46,10 +46,10 @@ void	ft_zoom(int x, int y, t_env *e, int isplus)
 		zoom_fact = 0.9f;
 	else
 		zoom_fact = 1.1f;
-	if (e->mlx.zoom <= 2.0f)
+	if (!(e->mlx.zoom > 1.5f && isplus == 0))
 	{
 		//creiamo il delta al quale poi applicare il fattore zoom
-		virt_pos = virtual_to_real(e->mlx, x, y);
+		virt_pos = virtual_to_real(e->mlx, x, HEIGHT - y);
 		e->mlx.zoom *= zoom_fact;
 		//ora lo applichiamo a virt_max&min
 		e->mlx.virt_max.x = e->mlx.virt_max.x * zoom_fact + virt_pos.x * (1 - zoom_fact);
@@ -66,22 +66,34 @@ void	ft_zoom(int x, int y, t_env *e, int isplus)
 	}
 }
 
+int	ft_julia_mouse(int x, int y, t_env *e)
+{
+	if (e->var.mandelbrot)
+		e->var.mandelbrot = 0;
+	e->function = &ft_julia;
+	e->var.julia = virtual_to_real(e->mlx, x, y);
+	print_pxl(e);
+	return (0);
+}
+
 int	new_julia(t_env *e, int x, int y)
 {
-		write(1, "sono qui\n", 9);
-		if (e->var.mandelbrot)
-			e->var.mandelbrot = 0;
-		e->function = &ft_julia;
-		e->var.julia = virtual_to_real(e->mlx, x, y);
-		write(1, "ancora qui\n", 11);
-		print_pxl(e);
-		write(1, "fine\n", 5);
-		return (0);
+	write(1, "sono qui\n", 9);
+	if (e->var.mandelbrot)
+		e->var.mandelbrot = 0;
+	e->function = &ft_julia;
+	e->var.julia = virtual_to_real(e->mlx, x, y);
+	write(1, "ancora qui\n", 11);
+	print_pxl(e);
+	write(1, "fine\n", 5);
+	return (0);
 }
 
 int	destroy_win(t_env *e)
 {
+	ft_putstr_fd(" im having probs\n", 2);
 	mlx_destroy_window(e->mlx.mlx, e->mlx.win);
+	write(2, "ei?\n", 4);
 	write(1, "See ya!\n", 8);
 	exit(0);
 }
@@ -112,22 +124,32 @@ void palette(int keycode, t_env *e)
 	print_pxl(e);
 }
 
-int	ft_command(int keycode, int x, int y, t_env *e)
+int	ft_command(int keycode, t_env *e)
 {
-	printf("key:\t\t%d\n", keycode);
 	if (keycode == 53)
+	{
 		destroy_win(e);
-	else if (keycode == 49)
+		return (0);
+	}
+	if (keycode == 49)
 	{
 		which_function(e);
 		ft_init_e(e);
 		print_pxl(e);
+		return (0);
 	}
-	else if (keycode >= 18 && keycode <= 29)
+	if (keycode >= 18 && keycode <= 29)
+	{
 		palette(keycode, e);
-	else if (keycode == 256 && (!e->var.burning && !e->var.mandelbrot))
-		new_julia(e, x, y);
+		return (0);
+	}
+	// if (keycode == 256 && (!e->var.burning && !e->var.mandelbrot))
+	// {
+	// 	mlx_mouse_hook(e->mlx.win, ft_julia_mouse, &e);
+	// 	mlx_loop(e->mlx.mlx);
+	// 	return (0);
+	// }
 	else if (keycode <= 126 && keycode >= 123)
 		move_map_arrows(keycode, e);
-	return (-1);
+	return (0);
 }

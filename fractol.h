@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 15:37:38 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/22 18:42:32 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/23 19:58:08 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # ifndef DIM
 
 #  define DIM
-#  define WIDTH 720
-#  define HEIGHT 720
+#  define WIDTH 640
+#  define HEIGHT 480
 
 # endif
 
@@ -82,7 +82,7 @@ int				ft_mouse_manage(int keycode, int x, int y, t_env *e);
 int				new_julia(t_env *e, int x, int y);
 int				destroy_win(t_env *e);
 void			move_map_arrows(int keycode, t_env *e);
-int				ft_command(int keycode, int x, int y, t_env *e);
+int				ft_command(int keycode, t_env *e);
 //initialize.c
 void			print_calls(void);
 void			which_function(t_env *e);

@@ -6,13 +6,13 @@
 #    By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/15 11:33:10 by mcerchi           #+#    #+#              #
-#    Updated: 2022/03/19 15:41:36 by mcerchi          ###   ########.fr        #
+#    Updated: 2022/03/23 19:32:43 by mcerchi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	fractol
 
-SRC			=	fractol.c commands.c initialize.c calculus.c 
+SRC			=	fractol.c commands.c initialize.c calculus.c
 
 OBJ			=	$(SRC:.c=.o)
 
@@ -58,5 +58,12 @@ fclean.all	:	fclean
 re			:	fclean $(NAME)
 
 re.all		:	fclean.all all
+
+debug		:	$(OBJ)
+				make -C ./math_lib
+				make -C ./mlx
+				make -C ./libft
+				@mv mlx/libmlx.dylib .
+				$(CC) $(CFLAGS) -g -o $(NAME) $(OBJ) $(MLX) $(MATH_LIB) $(LIBFT)
 
 .PHONY		: all clean fclean re
