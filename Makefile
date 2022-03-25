@@ -6,7 +6,7 @@
 #    By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/15 11:33:10 by mcerchi           #+#    #+#              #
-#    Updated: 2022/03/23 19:32:43 by mcerchi          ###   ########.fr        #
+#    Updated: 2022/03/25 15:29:58 by mcerchi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,8 @@ $(NAME)		:	$(OBJ)
 				make -C ./libft
 				@mv mlx/libmlx.dylib .
 				$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(MLX) $(MATH_LIB) $(LIBFT)
+				@clear
+				@echo "Compilation successful!"
 
 all			:	$(NAME)
 

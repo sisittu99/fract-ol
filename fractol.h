@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 15:37:38 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/23 19:58:08 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/25 15:18:50 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 #  define DIM
 #  define WIDTH 640
-#  define HEIGHT 480
+#  define HEIGHT 640
 
 # endif
 
@@ -51,7 +51,7 @@ typedef struct	s_vars
 	void		*win;
 	t_cpx		virt_max;
 	t_cpx		virt_min;
-	long double	zoom;
+	double	zoom;
 }	t_vars;
 
 typedef struct s_bool
@@ -86,7 +86,7 @@ int				ft_command(int keycode, t_env *e);
 //initialize.c
 void			print_calls(void);
 void			which_function(t_env *e);
-void			my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void			my_mlx_pixel_put(t_env *e, int x, int y);
 void			ft_init_e(t_env *e);
 //fractol.c
 unsigned int	ft_colour(t_pxl x);

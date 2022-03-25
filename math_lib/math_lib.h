@@ -18,21 +18,22 @@
 
 typedef struct s_cpx
 {
-	long double	x;
-	long double	y;
+	double	x;
+	double	y;
 }	t_cpx;
 
 //basic_math.c
-t_cpx	ft_create_cpx(long double x, long double y);
+t_cpx	ft_create_cpx(double x, double y);
 t_cpx	ft_add_cpx(t_cpx a, t_cpx b);
 t_cpx	ft_sub_cpx(t_cpx a, t_cpx b);
-void	ft_real_const_cpx(t_cpx *a, long double c);
+void	ft_real_const_cpx(t_cpx *a, double c);
 //math_mult_n_div.c
 t_cpx	ft_mult_cpx(t_cpx a, t_cpx b);
 t_cpx	ft_div_cpx(t_cpx a, t_cpx b);
-void	ft_sqr_cpx(t_cpx *a, long double real_c, long double img_c);
+void	ft_sqr_cpx(t_cpx *a,  double real_c, double img_c);
+t_cpx	ft_power_cpx(t_cpx a, int n);
 
-void	ft_newton_bin(t_cpx *a, int n, long double real_c, long double img_c);
+void	ft_newton_bin(t_cpx *a, int n, double real_c, double img_c);
 int		coeff(int n, int k);
 int		factorial(int nb);
 

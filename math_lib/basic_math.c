@@ -12,7 +12,7 @@
 
 #include "math_lib.h"
 
-t_cpx	ft_create_cpx(long double x, long double y)
+t_cpx	ft_create_cpx(double x, double y)
 {
 	t_cpx	new;
 
@@ -39,7 +39,7 @@ t_cpx	ft_sub_cpx(t_cpx a, t_cpx b)
 	return (sub);
 }
 
-void	ft_real_const_cpx(t_cpx *a, long double c)
+void	ft_real_const_cpx(t_cpx *a, double c)
 {
 	(*a).x *= c;
 	(*a).y *= c;

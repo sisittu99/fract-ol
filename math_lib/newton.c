@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 12:53:07 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/22 17:38:45 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/25 15:19:45 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	coeff(int n, int k)
 }
 #include <stdio.h>
 //be careful! This is supposed to be used with complex numbers, so we multiply -1 where needed.
-void	ft_newton_bin(t_cpx *a, int n, long double real_c, long double img_c)
+void	ft_newton_bin(t_cpx *a, int n, double real_c, double img_c)
 {
 	t_cpx	tmp;
 	int		k;
@@ -57,7 +57,7 @@ void	ft_newton_bin(t_cpx *a, int n, long double real_c, long double img_c)
 			tmp.y = coeff(n, k) * pow(a->x, n - k) * pow(a->y, k) * -1;
 		*a = tmp;
 		tmp = *a;
-		printf("a.x = %Lf\na.y = %Lf\n", a->x, a->y);
+		printf("a.x = %f\na.y = %f\n", a->x, a->y);
 		k++;
 	}
 	a->x += real_c;

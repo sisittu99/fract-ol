@@ -6,7 +6,7 @@
 /*   By: mcerchi <mcerchi@student.42roma.it>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 13:11:41 by mcerchi           #+#    #+#             */
-/*   Updated: 2022/03/23 18:44:46 by mcerchi          ###   ########.fr       */
+/*   Updated: 2022/03/25 15:36:39 by mcerchi          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,14 @@ void	print_calls(void)
 
 void	which_function(t_env *e)
 {
-	e->var.mandelbrot = 0;
+	e->var.mandelbrot = 2;
 	e->var.julia.x = 0;
 	e->var.julia.y = 0;
 	e->var.burning = 0;
-	if (e->mlx.win)
-		mlx_destroy_window(e->mlx.mlx, e->mlx.win);
+	ft_putstr_fd("ehi\n", 1);
+	// if (e->mlx.win)
+		// mlx_clear_window(e->mlx.mlx, e->mlx.win);
+	ft_putstr_fd("ehi\n", 1);
 	if (e->argc < 2)
 		print_calls();
 	else if (!ft_strncmp(e->argv[1], "mandelbrot", 10))
@@ -40,7 +42,6 @@ void	which_function(t_env *e)
 		{
 			e->var.mandelbrot = ft_atoi(e->argv[2]);
 			e->function = &ft_mandelbrot_math;
-			return ;
 		}
 		else
 			print_calls();
@@ -50,24 +51,32 @@ void	which_function(t_env *e)
 		e->var.julia.x = 0.285;
 		e->var.julia.y = 0.01;
 		e->function = &ft_julia;
-		return ;
 	}
 	else if (!ft_strncmp(e->argv[1], "burning_ship", 13))
 	{
 		e->var.burning = 1;
 		e->function = &ft_burning_ship;
-		return ;
 	}
 	else
 		print_calls();
 }
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char	*dst;
+// void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+// {
+// 	char	*dst;
 
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+// 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+// 	*(unsigned int*)dst = color;
+// }
+
+void		my_mlx_pixel_put(t_env *e, int x, int y)
+{
+	if ((x >= 0 || x <= WIDTH) && (y >= 0 || y <= HEIGHT))
+	{
+		e->img.addr[(x * 4) + (y * WIDTH * 4) + 2] = e->col.r;
+		e->img.addr[(x * 4) + (y * WIDTH * 4) + 1] = e->col.g;
+		e->img.addr[(x * 4) + (y * WIDTH * 4)] = e->col.b;
+	}
 }
 
 void	ft_init_e(t_env *e)
@@ -75,9 +84,7 @@ void	ft_init_e(t_env *e)
 	e->col.r = 0;
 	e->col.g = 0;
 	e->col.b = 0;
-	e->col.palette = 2;
-	e->mlx.mlx = mlx_init();
-	e->mlx.win = mlx_new_window(e->mlx.mlx, WIDTH, HEIGHT, "So, you chose truth");
+	e->col.palette = 0;
 	e->mlx.virt_min.x = -2;
 	e->mlx.virt_max.x = 2;
 	e->mlx.virt_min.y = -2;
