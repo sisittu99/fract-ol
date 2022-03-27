@@ -50,22 +50,16 @@ void	ft_zoom(int x, int y, t_env *e, int isplus)
 	{
 		virt_pos = virtual_to_real(e->mlx, x, HEIGHT - y);
 		e->mlx.zoom *= zoom_fact;
-		e->mlx.virt_max.x = e->mlx.virt_max.x * zoom_fact + virt_pos.x * (1 - zoom_fact);
-		e->mlx.virt_max.y = e->mlx.virt_max.y * zoom_fact + virt_pos.y * (1 - zoom_fact);
-		e->mlx.virt_min.x = e->mlx.virt_min.x * zoom_fact + virt_pos.x * (1 - zoom_fact);
-		e->mlx.virt_min.y = e->mlx.virt_min.y * zoom_fact + virt_pos.y * (1 - zoom_fact);
+		e->mlx.virt_max.x = e->mlx.virt_max.x * zoom_fact
+					+ virt_pos.x * (1 - zoom_fact);
+		e->mlx.virt_max.y = e->mlx.virt_max.y * zoom_fact
+					+ virt_pos.y * (1 - zoom_fact);
+		e->mlx.virt_min.x = e->mlx.virt_min.x * zoom_fact
+					+ virt_pos.x * (1 - zoom_fact);
+		e->mlx.virt_min.y = e->mlx.virt_min.y * zoom_fact
+					+ virt_pos.y * (1 - zoom_fact);
 		print_pxl(e);
 	}
-}
-
-int	ft_julia_mouse(int x, int y, t_env *e)
-{
-	if (e->var.mandelbrot)
-		e->var.mandelbrot = 0;
-	e->function = &ft_julia;
-	e->var.julia = virtual_to_real(e->mlx, x, y);
-	print_pxl(e);
-	return (0);
 }
 
 int	new_julia(t_env *e, int x, int y)
@@ -77,13 +71,6 @@ int	new_julia(t_env *e, int x, int y)
 	return (0);
 }
 
-int	destroy_win(t_env *e)
-{
-	mlx_destroy_window(e->mlx.mlx, e->mlx.win);
-	write(1, "See ya!\n", 8);
-	exit(0);
-}
-
 int	ft_mouse_manage(int keycode, int x, int y, t_env *e)
 {
 	if (keycode == 4)
@@ -93,23 +80,6 @@ int	ft_mouse_manage(int keycode, int x, int y, t_env *e)
 	if (keycode == 1 && !e->var.burning && e->var.mandelbrot == 2)
 		new_julia(e, x, y);
 	return (0);
-}
-
-void palette(int keycode, t_env *e)
-{
-	if (keycode == 29)
-		e->col.palette = 0;
-	if (keycode == 18)
-		e->col.palette = 1;
-	if (keycode == 19)
-		e->col.palette = 2;
-	if (keycode == 20)
-		e->col.palette = 3;
-	if (keycode == 21)
-		e->col.palette = 4;
-	if (keycode == 23)
-		e->col.palette = 5;
-	print_pxl(e);
 }
 
 int	ft_command(int keycode, t_env *e)

@@ -12,26 +12,12 @@
 
 #include "fractol.h"
 
-void	print_calls(void)
-{
-	ft_putstr_fd("Please write the function you want:\n", 2);
-	ft_putstr_fd("1)\tmandelbrot [define the exponent too!]\n", 2);
-	ft_putstr_fd("2)\tjulia\n", 2);
-	ft_putstr_fd("3)\tburning_ship\n", 2);
-	ft_putstr_fd("\n\n\nEx.:\t\"./fractol mandelbrot 5\"", 2);
-	exit(0);
-}
-
 void	which_function(t_env *e)
 {
 	e->var.mandelbrot = 2;
 	e->var.julia.x = 0;
 	e->var.julia.y = 0;
 	e->var.burning = 0;
-	ft_putstr_fd("ehi\n", 1);
-	// if (e->mlx.win)
-		// mlx_clear_window(e->mlx.mlx, e->mlx.win);
-	ft_putstr_fd("ehi\n", 1);
 	if (e->argc < 2)
 		print_calls();
 	else if (!ft_strncmp(e->argv[1], "mandelbrot", 10))
@@ -59,24 +45,6 @@ void	which_function(t_env *e)
 	}
 	else
 		print_calls();
-}
-
-// void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-// {
-// 	char	*dst;
-
-// 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-// 	*(unsigned int*)dst = color;
-// }
-
-void		my_mlx_pixel_put(t_env *e, int x, int y)
-{
-	if ((x >= 0 || x <= WIDTH) && (y >= 0 || y <= HEIGHT))
-	{
-		e->img.addr[(x * 4) + (y * WIDTH * 4) + 2] = e->col.r;
-		e->img.addr[(x * 4) + (y * WIDTH * 4) + 1] = e->col.g;
-		e->img.addr[(x * 4) + (y * WIDTH * 4)] = e->col.b;
-	}
 }
 
 void	ft_init_e(t_env *e)

@@ -72,24 +72,35 @@ typedef struct s_env
 	char	**argv;
 }	t_env;
 
+//colours.c
+void			which_colour(int it, t_env *e);
+void			which_colour_two(int it, t_env *e);
+unsigned int	ft_colour(t_pxl x);
+void			palette(int keycode, t_env *e);
 //calculus.c
 t_cpx			virtual_to_real(t_vars mlx, int x, int y);
+t_cpx			mandelbrot_calc(t_bool var, t_cpx val, t_cpx constant);
 int				ft_mandelbrot_math(t_vars mlx, t_bool var, int x, int y);
 int				ft_julia(t_vars mlx, t_bool var, int x, int y);
 int				ft_burning_ship(t_vars mlx, t_bool var, int x, int y);
 //commands.c
 int				ft_mouse_manage(int keycode, int x, int y, t_env *e);
 int				new_julia(t_env *e, int x, int y);
-int				destroy_win(t_env *e);
 void			move_map_arrows(int keycode, t_env *e);
+void			ft_zoom(int x, int y, t_env *e, int isplus);
 int				ft_command(int keycode, t_env *e);
 //initialize.c
-void			print_calls(void);
 void			which_function(t_env *e);
-void			my_mlx_pixel_put(t_env *e, int x, int y);
 void			ft_init_e(t_env *e);
+//print.c
+void			print_calls(void);
+void			print_intro(void);
+void			print_expl(t_env e);
+void			print_commands(t_env e);
 //fractol.c
-unsigned int	ft_colour(t_pxl x);
+int				destroy_win(t_env *e);
+void			my_mlx_pixel_put(t_env *e, int x, int y);
+
 void			print_pxl(t_env *e);
 
 #endif

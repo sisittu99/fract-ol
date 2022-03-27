@@ -61,7 +61,6 @@ int	ft_julia(t_vars mlx, t_bool var, int x, int y)
 
 	while (i < 20)
 	{
-		// ft_newton_bin(&val, 2, constant.x, constant.y);
 		val = mandelbrot_calc(var, val, constant);
 		if (pow(val.x, 2) + pow(val.y, 2) > 2.0*2.0)
 			break ;
