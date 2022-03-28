@@ -69,7 +69,9 @@ t_cpx	ft_add_cpx(t_cpx a, t_cpx b)
 
 Tutta la teoria di questo progetto è basato sulle successioni. Le spiegherò velocemente, ma non sarà così poco intuitivo... spero😅
 
-Le successioni sono funzioni definite su &#8469; *(interi positivi)* con valori solitamente su &#8477;, ma nulla ci vieta di utilizzare anche l'insieme &#8450;!
+Le successioni sono funzioni definite su &#8469; (insieme degli interi positivi) con valori solitamente su &#8477;, ma nulla ci vieta di utilizzare anche l'insieme &#8450;!
+
+### esempio: la successione di Fibonacci
 
 La successione più famosa è sicuramente quella di Fibonacci, che vien così definita:
 
@@ -81,12 +83,61 @@ F<sub>1</sub> = 1
 
 F<sub>n+1</sub> = F<sub>n</sub> + F<sub>n-1</sub>
 
-dove i primi numeri saranno così definiti: 
-0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233... Chiaro, no?
+dove i primi numeri saranno quindi: 
+`0 - 1 - 1 - 2 - 3 - 5 - 8 - 13 - 21 - 34 - 55 - 89 - 144 - 233 - ... `
+
+Chiaro, no?
+
+### La successione di Mandelbrot
+Abbiamo una situazione simile attraverso una formula banale all'occhio:
+
+&forall; n &isin; &#8469;, c &isin; &#8450;
+
+z<sub>n+1</sub> = (z<sub>n</sub>&sup2; + c) &isin; &#8450;
+> In realtà, questa successione è definibile con un esponente x &isin; &#8477;, dove al tendere di x &rarr; +&infin; avremo un cerchio. Cercate su Google *Multibrot* per saperne di più!
+
+L'idea di fondo è questa: l'appartenenza di un punto all'insieme di Mandelbrot permette di trovare infiniti punti appartenenti allo stesso insieme utilizzando la successione di cui sopra. 
+Per fare ciò, assegniamo il valore del nostro punto p = (a + ib) alla costante c della successione. Avremo quindi:
+
+* z<sub>0</sub> = 0 + p
+
+* z<sub>1</sub> = z<sub>0</sub>&sup2; + c = p&sup2; + p 
+
+* z<sub>2</sub> = z<sub>1</sub>&sup2; + c = (p&sup2; + p)&sup2; + p 
+
+* z<sub>3</sub> = z<sub>2</sub>&sup2; + c = [(p&sup2; + p)&sup2; + p]&sup2; + p
 
 
-Per l'insieme di Mandelbrot, abbiamo una situazione simile attraverso una formula banale all'occhio:
+e così via!
 
-&forall; n &isin; &#8469;, c &isin; &#8477;
+Qualora il numero non dovesse appartenere all'insieme di Mandelbrot, la successione avrà valori ben lontani da quelli che ci interessano e con un'alta probabilità divergerà. In caso contrario, tendendo n &rarr; +&infin; riusciremo a scoprire tutti i punti, e il risultato sarà questo:
 
-z<sub>n+1</sub> = z<sub>n</sub><sup>2</sup> + c
+<img width="627" alt="Screen Shot 2022-03-28 at 3 26 23 PM" src="https://user-images.githubusercontent.com/92301111/160407881-4ef8d1c4-14d3-4ec2-820f-5d9a4379d9a8.png">
+
+Leggiamo fin da subito l'immagine, così da capire qual è il nostro obiettivo. Tutti i pixel grigio scuro ammassati in questa strana forma sono la rappresentazione grafica dei punti appartenenti all'insieme di Mandelbrot. E gli altri?
+
+Beh, quelli non vi appartengono, ma a seconda della loro vicinanza all'insieme avranno dei valori nella successione più o meno vicini a quelli dei punti di Mandelbrot, e verrà pertanto assegnato a loro un colore specifico che crea un effetto ottico piacevole all'occhio. Torneremo su questo tema nella sezione "tecnica" di questo tutorial. Intanto, godetevi un esempio di una parte zoomata:
+
+<img width="635" alt="Screen Shot 2022-03-28 at 3 41 55 PM" src="https://user-images.githubusercontent.com/92301111/160410750-065bcc60-fd13-441a-83ed-7d546079f07c.png">
+
+> Non è adorabile? 😍😍😍😍😍
+
+### La funzione di Julia
+
+Se l'insieme di Mandelbrot è una successione di numeri, quello di Julia è piuttosto una *funzione olomorfa*. Forse vi stupirà leggere che in Julia, 
+
+&fnof;<sub>c</sub>(z) = z&sup2; + c
+
+Praticamente il calcolo dei valori rispetta la stessa regola, se non fosse che in questo caso la costante **non è il punto di partenza!** Bensì è fissa per qualunque punto. Questo perché Julia è la *funzione primitiva* dell'insieme di Mandelbrot, e pertanto ogni costante ha un insieme di punti diverso da qualunque altra. Per esempio, questo ha come costante c = (0.285 + 0.01i)
+
+<img width="378" alt="Screen Shot 2022-03-28 at 4 13 25 PM" src="https://user-images.githubusercontent.com/92301111/160417503-4079dd5e-fc7e-49ee-8915-02a7e02372ac.png">
+
+mentre questo ha c = (-0.55 - 0.4894i)
+
+<img width="630" alt="Screen Shot 2022-03-28 at 4 17 16 PM" src="https://user-images.githubusercontent.com/92301111/160418241-9db63ade-8457-4937-9bb9-20aef43f923d.png">
+
+e qui c = (0 + 0i) (lol)
+
+<img width="502" alt="Screen Shot 2022-03-28 at 4 19 49 PM" src="https://user-images.githubusercontent.com/92301111/160418724-d49bd33a-7fa8-449b-b617-5fe8ebf311e8.png">
+
+[WORK IN PROGRESS]
