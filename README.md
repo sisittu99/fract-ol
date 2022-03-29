@@ -1,3 +1,5 @@
+[WORK IN PROGRESS]
+
 # 42-Tutorial: Fract-ol
 
 # Il Subject
@@ -121,7 +123,7 @@ Beh, quelli non vi appartengono, ma a seconda della loro vicinanza all'insieme a
 <img width="635" alt="Screen Shot 2022-03-28 at 3 41 55 PM" src="https://user-images.githubusercontent.com/92301111/160410750-065bcc60-fd13-441a-83ed-7d546079f07c.png">
 
 > Non è adorabile? 😍😍😍😍😍
-
+***
 ### La funzione di Julia
 
 Se l'insieme di Mandelbrot è una successione di numeri, quello di Julia è piuttosto una *funzione olomorfa*. Forse vi stupirà leggere che in Julia, 
@@ -139,5 +141,18 @@ mentre questo ha c = (-0.55 - 0.4894i)
 e qui c = (0 + 0i) (lol)
 
 <img width="502" alt="Screen Shot 2022-03-28 at 4 19 49 PM" src="https://user-images.githubusercontent.com/92301111/160418724-d49bd33a-7fa8-449b-b617-5fe8ebf311e8.png">
+
+***
+
+### La successione della Burning Ship
+
+Funziona esattamente come Mandelbrot, ma in più bisognerà mettere in valore assoluto ogni valore, facendo diventare la formula così:
+
+z<sub>n+1</sub> = |(z<sub>n</sub>&sup2; + c)| &isin; &#8450;
+
+# Lo pseudo-codice
+
+Se in matematica possiamo generalizzare tutto tendendo all'infinito senza problemi, in informatica dobbiamo porre parametri e limiti funzionali a ciò che vogliamo fare.
+Perché dico questo? Perché nel calcolo di ogni punto dovremo iterare la successione o la funzione per x volte, soltanto per capire se il punto fa parte dell'insieme o meno. L'idea di fondo è che, qualora ci trovassimo di fronte ad un punto lievemente esterno all'insieme, questo in i (< x) volte uscirà da un'area di nostro interesse, che andremo a limitare per non affaticare troppo la macchina durante la renderizzazione. 
 
 [WORK IN PROGRESS]
