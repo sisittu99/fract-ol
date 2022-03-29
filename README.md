@@ -170,19 +170,48 @@ Capite bene che lo pseudocodice verrà così:
 for(i = 0; i <= WIDTH; i++)
 	for (j = 0; j <= HEIGHT; j++)
 	{
+		res = math_point(i, j);
 		for(iterations = 0; iterations < x; iterations++)
 		{
-			res = calculate_function(...);
-			if (res > area)
+			res = calculate_function(res);
+			if (res > borders)
 				break;
 		}
 		calculate_colour(iterations);
 	}
 ```
-La funzione di per sé avrà funzione O grande $\mathrm{O}(nˆ{2})$ per n &rarr; &infin;; tuttavia, all'aumentare di x, si tenderà piuttosto ad un complessivo O(n&sup3;) che rende molto più lunghi i tempi di calcolo e quindi quelli di renderizzazione. Sarà nel vostro interesse scegliere un valore sufficiente sia per mostrare un'immagine decente, sia per non far perdere troppo tempo a chi vuole zoomare.
+I primi due cicli permettono di prendere ogni pixel in considerazione
+La funzione di per sé avrà funzione O grande O(n&sup2;) per n &rarr; &infin;; tuttavia, all'aumentare di x, si tenderà piuttosto ad un complessivo O(n&sup3;) che rende molto più lunghi i tempi di calcolo e quindi quelli di renderizzazione. Sarà nel vostro interesse scegliere un valore sufficiente sia per mostrare un'immagine decente, sia per non far perdere troppo tempo a chi vuole zoomare.
 > Funzione di O grande... [Sapete di cosa si sta parlando?](https://www.youmath.it/lezioni/analisi-matematica/limiti-continuita-e-asintoti/3260-o-grande-e-proprieta-degli-o-grande.html) Probabilmente lo avete già incontrato studiando gli algoritmi di ordinamento.
 
+Abbiate cura anche nello scegliere i "borders" giusti! Personalmente ho ragionato utilizzando un cerchio che racchiudesse tutti i punti che mi occorressero, ma ci sono sia metodi più ottimizzati o metodi più veloci (ragionare a rettangoli è uno di questi).
 
+# Dai pixel al piano cartesiano
 
+Vi siete chiesti a cosa serva `math_point(i, j)` nello pseudo-codice?
 
-[WORK IN PROGRESS]
+Altro non fa che convertire la posizione del pixel in posizione del piano cartesiano. È una banale proporzione, dove avremo bisogno di:
+* larghezza e lunghezza della finestra, `WIDTH` e `HEIGHT`
+* gli estremi del piano cartesiano che si sta stampando, `max_x` `min_x` `max_y` e `min_y`
+* il punto nello schermo che si sta calcolando.
+
+Presi `i` ed `j`, daremo `p = {x, y}` questi valori:
+```
+	    max_x - min_x
+p.x = i * ----------------- + min_x
+		WIDTH
+
+	    max_y - min_y
+p.y = j * ----------------- + min_y
+		HEIGHT
+```
+Spieghiamo al volo: `i` e `j` hanno come unità di misura i pixel, quindi bisogna dividerli per la lunghezza (o larghezza) della dimensione per trovare la proporzione giusta. Al chè, la moltiplichiamo per la lunghezza del piano cartesiano, in modo tale da averlo proporzionato correttamente. Infine, visto che nel 99% dei casi non si partirà a visualizzare l'area dall'origine, avremo bisogno di sommare il tutto con l'inizio della zona visualizzata.
+
+Il motivo per cui non esplicitiamo i valori è perché questi varieranno! Specialmente nel momento in cui vorrete spostarvi o vorrete (dovrete!) zoomare all'infinito. L'unica cosa che rimarrà fissa sarà la dimensione della finestra, almeno ad inizio compilazione. Per il resto, ogni qualvolta dovrete modificare dei parametri, sia per uno zoom o per un cambio colore o per un passaggio ad un nuovo frattale, dovrete cancellare l'immagine e ricalcolarla da capo. Per quanto non sia la cosa migliore da fare, è l'unica possibilità che abbiamo in questo progetto. Abbiate quindi cura di scrivere bene il vostro codice e di renderlo funzionante in ogni caso!
+
+***
+
+Siamo giunti ad un buon punto della spiegazione. Non sono andato a spiegarvi tutto tutto perché ci sono varianti che potete prendere e non voglio limitare la vostra creatività e la vostra inventiva in un progetto tutto sommato limitante rispetto ad altri. Sappiate che per potervi divertire potete trovare nuove funzioni da applicare ai vostri tasti, potete creare colori particolari, calcolare il maggior numero di insiemi di frattali possibili... e una volta consegnato, potreste addirittura provare a stampare l'immagine in multi-thread o spostare fisicamente i pixel già assegnati senza andarli a ricalcolare ogni volta, velocizzando notevolmente la renderizzazione!
+> A tal proposito, regalo un pacchetto di Haribo a chi mi invia il codice per il frattale del drago 🐉
+
+Per qualunque domanda, spiegazione, chiarimento, proposta o discussione mi trovate sempre su Slack (@mcerchi) o [via mail](mailto:mcerchi@student.42roma.it). Buon lavoro!
