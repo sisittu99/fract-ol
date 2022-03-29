@@ -24,8 +24,12 @@ Quindi, partite da qui! Ci rivedremo non appena avrete un'idea più chiara.
 * [Julia Set Generator](https://marksmath.org/visualization/julia_sets/) (probabilmente il link che mi ha aiutato di più!)
 * [Il frattale Burning Ship](https://it.wikipedia.org/wiki/Burning_ship) (bonus)
 
+> N.b.: eviterò di spiegarvi MiniLibX in questo tutorial: gli argomenti matematici sono già troppi per poter scrivere come stampare un pixel con le funzioni date. Tuttavia, ci sono spiegazioni ed esempi di codice molto esplicativi [in questo documento](https://harm-smits.github.io/42docs/libs/minilibx)! Personalmente mi sono basato anche [su questo link](https://aurelienbrabant.fr/blog/pixel-drawing-with-the-minilibx), che dice più o meno le stesse cose e ti permette di stampare pixel nella maniera più consona possibile.
+> 
+>  Esercitatevi! Vi sarà molto d'aiuto arrivare a stampare un cerchio e saperlo muovere nello schermo, da lì in poi le competenze necessarie saranno sufficienti per questo progetto.
+
 # La teoria
-## i numeri complessi
+## i numeri complessi 🤔
 Per spiegare questo progetto, baseremo tutto su Mandelbrot e poi spiegheremo le differenze minime ma necessarie con gli altri due.
 Deve esservi anzitutto chiara la definizione di numero immaginario, dove **i = &#8730;(-1)**. Vi ricorda qualcosa? Bene, perché ovviamente il concetto successivo è quello dell'**insieme dei numeri complessi**, che in questo progetto è imprescindibile.
 Per coloro che hanno qualche dubbio, vi ricordo che i numeri complessi appartengono all'insieme immaginario, dove 
@@ -67,7 +71,7 @@ t_cpx	ft_add_cpx(t_cpx a, t_cpx b)
 	return (added);
 }
 ```
-## le successioni numeriche
+## le successioni numeriche 🔢
 
 Tutta la teoria di questo progetto è basato sulle successioni. Le spiegherò velocemente, ma non sarà così poco intuitivo... spero😅
 
@@ -79,18 +83,18 @@ La successione più famosa è sicuramente quella di Fibonacci, che vien così de
 
 &forall; n  &isin; &#8469;
 
-F<sub>0</sub> = 0
+⎧ F<sub>0</sub> = 0
 
-F<sub>1</sub> = 1
+⎨ F<sub>1</sub> = 1
 
-F<sub>n+1</sub> = F<sub>n</sub> + F<sub>n-1</sub>
+⎩ F<sub>n+1</sub> = F<sub>n</sub> + F<sub>n-1</sub>
 
 dove i primi numeri saranno quindi: 
 `0 - 1 - 1 - 2 - 3 - 5 - 8 - 13 - 21 - 34 - 55 - 89 - 144 - 233 - ... `
 
 Chiaro, no?
 
-### La successione di Mandelbrot
+### La successione di Mandelbrot 🍑
 Abbiamo una situazione simile attraverso una formula banale all'occhio:
 
 &forall; n &isin; &#8469;, c &isin; &#8450;
@@ -124,7 +128,7 @@ Beh, quelli non vi appartengono, ma a seconda della loro vicinanza all'insieme a
 
 > Non è adorabile? 😍😍😍😍😍
 ***
-### La funzione di Julia
+### La funzione di Julia 🌿
 
 Se l'insieme di Mandelbrot è una successione di numeri, quello di Julia è piuttosto una *funzione olomorfa*. Forse vi stupirà leggere che in Julia, 
 
@@ -144,7 +148,7 @@ e qui c = (0 + 0i) (lol)
 
 ***
 
-### La successione della Burning Ship
+### La successione della Burning Ship 🛳
 
 Funziona esattamente come Mandelbrot, ma in più bisognerà mettere in valore assoluto ogni valore, facendo diventare la formula così:
 
@@ -153,6 +157,32 @@ z<sub>n+1</sub> = |(z<sub>n</sub>&sup2; + c)| &isin; &#8450;
 # Lo pseudo-codice
 
 Se in matematica possiamo generalizzare tutto tendendo all'infinito senza problemi, in informatica dobbiamo porre parametri e limiti funzionali a ciò che vogliamo fare.
-Perché dico questo? Perché nel calcolo di ogni punto dovremo iterare la successione o la funzione per x volte, soltanto per capire se il punto fa parte dell'insieme o meno. L'idea di fondo è che, qualora ci trovassimo di fronte ad un punto lievemente esterno all'insieme, questo in i (< x) volte uscirà da un'area di nostro interesse, che andremo a limitare per non affaticare troppo la macchina durante la renderizzazione. 
+Perché questo? Perché nel calcolo di ogni punto dovremo iterare la successione o la funzione per x volte, soltanto per capire se il punto fa parte dell'insieme o meno. 
+
+L'idea di fondo è che, qualora ci trovassimo di fronte ad un punto lievemente esterno all'insieme, questo in i (< x) volte uscirà da un'area di nostro interesse, che andremo a limitare per non affaticare troppo la macchina durante la renderizzazione. Considerate che già 10-20 iterazioni sono sufficienti per trovare il risultato voluto! Poi se volete avere un risultato più affidabile basta aumentare il valore di x: le foto esempio sopra hanno 200 iterazioni per ogni punto, proprio per permettervi di vedere al meglio il risultato.
+
+Quanto è importante il valore di x?
+
+In realtà non molto ai fini del risultato in sé. Il problema che riscontrerete sarà più che altro la velocità nella renderizzazione in zone molto concentrate, in quanto tutti i punti appartenenti all'insieme scelto itereranno fino ad x, mentre quelli più vicini arriveranno a x - 1, la zona successiva ad x - 2 e cosi via...
+
+Capite bene che lo pseudocodice verrà così:
+```
+for(i = 0; i <= WIDTH; i++)
+	for (j = 0; j <= HEIGHT; j++)
+	{
+		for(iterations = 0; iterations < x; iterations++)
+		{
+			res = calculate_function(...);
+			if (res > area)
+				break;
+		}
+		calculate_colour(iterations);
+	}
+```
+La funzione di per sé avrà funzione O grande $\mathrm{O}(nˆ{2})$ per n &rarr; &infin;; tuttavia, all'aumentare di x, si tenderà piuttosto ad un complessivo O(n&sup3;) che rende molto più lunghi i tempi di calcolo e quindi quelli di renderizzazione. Sarà nel vostro interesse scegliere un valore sufficiente sia per mostrare un'immagine decente, sia per non far perdere troppo tempo a chi vuole zoomare.
+> Funzione di O grande... [Sapete di cosa si sta parlando?](https://www.youmath.it/lezioni/analisi-matematica/limiti-continuita-e-asintoti/3260-o-grande-e-proprieta-degli-o-grande.html) Probabilmente lo avete già incontrato studiando gli algoritmi di ordinamento.
+
+
+
 
 [WORK IN PROGRESS]
