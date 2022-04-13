@@ -126,5 +126,64 @@ We will return to this topic in the "technical" section of this tutorial. Meanwh
 
 > Lovely, isn't it?
 ***
+
+### Julia's function 🌿
+
+If the Mandelbrot set is a succession of numbers, the Julia set is rather a *holomorphic function*. Perhaps you will be surprised to read that in Julia,
+
+&fnof;<sub>c</sub>(z) = z&sup2; + c
+
+Practically the calculation of the values respects the same rule, except that in this case the constant **is not the starting point!** Indeed, it is fixed for any point. That is because Julia is the *primitive function* of the Mandelbrot set, thus every constant has a set of points unlike any other. For example, this has the constant c = (0.285 + 0.01i)
+
+<img width="378" alt="Screen Shot 2022-03-28 at 4 13 25 PM" src="https://user-images.githubusercontent.com/92301111/160417503-4079dd5e-fc7e-49ee-8915-02a7e02372ac.png">
+
+this one has c = (-0.55 - 0.4894i)
+
+<img width="630" alt="Screen Shot 2022-03-28 at 4 17 16 PM" src="https://user-images.githubusercontent.com/92301111/160418241-9db63ade-8457-4937-9bb9-20aef43f923d.png">
+
+and this... c = (0 + 0i) (lol)
+
+<img width="502" alt="Screen Shot 2022-03-28 at 4 19 49 PM" src="https://user-images.githubusercontent.com/92301111/160418724-d49bd33a-7fa8-449b-b617-5fe8ebf311e8.png">
+
+***
+
+### The Burning Ship Succession 🛳
+
+It works exactly like Mandelbrot, but in addition it'll need to put everything in absolute value, making the formula become like this:
+
+z<sub>n+1</sub> = |(z<sub>n</sub>&sup2; + c)| &isin; &#8450;
+
+# The pseudo-code
+
+If in maths we can generalize everything tending to infinity with no problem at all, in computer science we must set parameters and limits which'll be functional to what we want to see.
+Why this? Because in the calculation of each point we will have to iterate the sequence or the function for x times, just to understand if the point is part of the set or not. It's quite obvious to say that CPU won't calculate infinite numbers for any pixel of the image...
+
+The basic idea is that, if we are faced with a point slightly external to the whole, this will leave an area of our interest in i (< x) times, which we will limit in order not to tire the machine too much during rendering. Consider that already 10-20 iterations are enough to find the desired result! Then if you want to have a more reliable result just increase the value of x: the example photos above have 200 iterations for each point, just to allow you to better see the result.
+
+How important is the value of x?
+
+Not really much for the purpose of the result itself. The problem you will encounter will be the speed in rendering in very concentrated areas, as all the points belonging to the chosen set will iterate up to x, while the closest ones will arrive at x - 1, the next area after x - 2 and so on...
+
+The pseudocode will come like this:
+```
+for(i = 0; i <= WIDTH; i++)
+	for (j = 0; j <= HEIGHT; j++)
+	{
+		res = math_point(i, j);
+		for(iterations = 0; iterations < x; iterations++)
+		{
+			res = calculate_function(res);
+			if (res > borders)
+				break;
+		}
+		calculate_colour(iterations);
+	}
+```
+The first two cycles allow you to take each pixel into consideration.
+
+The function itself will have function O large O(n&sup2;) for n &rarr; &infin;; however, as x increases, it will tend towards an overall O(n&sup3;) which makes the computation and rendering times much longer. It's up to you whether to choose a sufficient value both to show a decent image and not to waste too much time for those who want to zoom.
+
+Please take care in choosing the right "borders"! Personally I reasoned using a circle that enclosed all the points I needed, but there are both more optimized methods or easiest ones (e.a. reasoning in rectangles).
+***
 [WORK IN PROGRESS]
 
