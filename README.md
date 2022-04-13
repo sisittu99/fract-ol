@@ -1,5 +1,3 @@
-[WORK IN PROGRESS]
-
 # 42-Tutorial: Fract-ol
 
 # Il Subject
@@ -24,7 +22,7 @@ Quindi, partite da qui! Ci rivedremo non appena avrete un'idea più chiara.
 * [Julia Set Generator](https://marksmath.org/visualization/julia_sets/) (probabilmente il link che mi ha aiutato di più!)
 * [Il frattale Burning Ship](https://it.wikipedia.org/wiki/Burning_ship) (bonus)
 
-> N.b.: eviterò di spiegarvi MiniLibX in questo tutorial: gli argomenti matematici sono già troppi per poter scrivere come stampare un pixel con le funzioni date. Tuttavia, ci sono spiegazioni ed esempi di codice molto esplicativi [in questo documento](https://harm-smits.github.io/42docs/libs/minilibx)! Personalmente mi sono basato anche [su questo link](https://aurelienbrabant.fr/blog/pixel-drawing-with-the-minilibx), che dice più o meno le stesse cose e ti permette di stampare pixel nella maniera più consona possibile.
+> N.b.: eviterò di spiegarvi MiniLibX in questo tutorial: gli argomenti matematici sono già troppi per poter scrivere qui come stampare un pixel con le funzioni date. Tuttavia, ci sono spiegazioni ed esempi di codice molto esplicativi [in questo documento](https://harm-smits.github.io/42docs/libs/minilibx)! Personalmente mi sono basato anche [su questo link](https://aurelienbrabant.fr/blog/pixel-drawing-with-the-minilibx), che dice più o meno le stesse cose e ti permette di stampare pixel nella maniera più consona possibile.
 > 
 >  Esercitatevi! Vi sarà molto d'aiuto arrivare a stampare un cerchio e saperlo muovere nello schermo, da lì in poi le competenze necessarie saranno sufficienti per questo progetto.
 
@@ -38,8 +36,8 @@ Per coloro che hanno qualche dubbio, vi ricordo che i numeri complessi apparteng
 
 z = (a + ib) &isin; &#8450;
 
-Spero davvero che solo leggere queste due righe vi abbia già riacceso una lampadina, altrimenti devo invitarvi a un ripasso generale. Questa [breve intro](https://www.youmath.it/lezioni/analisi-matematica/numeri-complessi/2697-definizione-di-numero-complesso.html) all'argomento sarà sufficiente al momento.
-Il mio compito qui invece sarà cercare di aiutarvi nella lettura e nel ragionamento della richiesta di questo progetto.
+> Spero davvero che solo leggere queste due righe vi abbia già riacceso una lampadina, altrimenti devo invitarvi a un ripasso generale. Questa [breve intro](https://www.youmath.it/lezioni/analisi-matematica/numeri-complessi/2697-definizione-di-numero-complesso.html) all'argomento sarà sufficiente al momento.
+> Il mio compito qui invece sarà cercare di aiutarvi nella lettura e nel ragionamento della richiesta di questo progetto.
 
 Per quanto i numeri complessi nella teoria sono pensati come un numero singolo (il nostro z), la loro rappresentazione avviene in un piano cartesiano dove
 1) l'ascisse è composta dalla parte reale del numero, equivalente al numero appartenente a &#8477;
@@ -51,7 +49,7 @@ Esempio:
 > crediti a YouMath
 
 
-Siccome il nostro computer, specie nel linguaggio C, non abbiamo una gestione diretta dei numeri complessi... L'idea condivisa da molti è quella di partire da una struct per ogni numero complesso così definita:
+Siccome nel nostro computer, specie nel linguaggio C, non abbiamo una gestione diretta dei numeri complessi... L'idea condivisa da molti è quella di partire da una struct per ogni numero complesso così definita:
 ```
 typedef struct s_cpx
 {
