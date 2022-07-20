@@ -184,6 +184,33 @@ The first two cycles allow you to take each pixel into consideration.
 The function itself will have function O large O(n&sup2;) for n &rarr; &infin;; however, as x increases, it will tend towards an overall O(n&sup3;) which makes the computation and rendering times much longer. It's up to you whether to choose a sufficient value both to show a decent image and not to waste too much time for those who want to zoom.
 
 Please take care in choosing the right "borders"! Personally I reasoned using a circle that enclosed all the points I needed, but there are both more optimized methods or easiest ones (e.a. reasoning in rectangles).
-***
-[WORK IN PROGRESS]
 
+# From pixels to the Cartesian plane
+
+Wondering what `math_point(i, j)` is for in pseudo-code?
+It simply converts the position of the pixel into the position of the Cartesian plane. It is a trivial proportion, where we will need:
+* window width and length, `WIDTH` and` HEIGHT`
+* the extremes of the Cartesian plane being printed, `max_x` `min_x` `max_y` and `min_y`
+* the point on the screen being calculated.
+
+Taking `i` and `j`, we will give `p = {x, y}` these values:
+```
+	    max_x - min_x
+p.x = i * ----------------- + min_x
+		WIDTH
+
+	    max_y - min_y
+p.y = j * ----------------- + min_y
+		HEIGHT
+```
+Let's explain it quickly: 
+
+`i` and `j` have pixels as the unit of measurement, so you have to divide them by the length (or width) of the dimension to find the right proportion. Therefore, we multiply it by the length of the Cartesian plane, in such a way as to have it proportioned correctly. Finally, since in 99% of cases the area will not be displayed from the origin, we will need to add everything together with the beginning of the displayed area.
+
+The reason why we don't make the values explicit is, they will vary! Especially when you want to move or you want (you will have to!) to zoom to infinity. The only thing that will remain set will be the size of the window, at least at the beginning of compilation. Otherwise, whenever you need to change parameters, whether for a zoom or for a color change or for a passage to a new fractal, you will have to delete the image and recalculate it from scratch. While it's not the best thing to do, it's the only chance we have in this project. So take care to write your code well and make it work in any case!
+***
+
+We have reached a good point of the explanation. I did not go to explain everything to you because there are variations that you can take and I don't want to limit your creativity and your inventiveness in a project that is, after all, limiting compared to others. Know that in order to have fun you can find new functions to apply to your keys, you can create particular colors, calculate as many sets of fractals as possible ... and once delivered, you could even try to print the image in multi-thread or physically move the pixels already assigned without going to recalculate them every time, considerably speeding up the rendering!
+> In this regard, I give a package of Haribo to whoever sends me the code for the dragon fractal 🐉
+
+For any question, explanation, clarification, proposal or discussion you can always find me on Slack (@mcerchi) or [by mail](mailto: mcerchi@student.42roma.it). Have a good job!
